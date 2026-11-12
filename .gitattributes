@@ -1,0 +1,5 @@
+# The HPC scripts are authored on Windows and executed on the Linux cluster.
+# A CRLF line ending breaks the shebang there ("bad interpreter: /bin/bash^M"),
+# so force LF for them regardless of anyone's core.autocrlf setting.
+*.sh     text eol=lf
+*.sbatch text eol=lf

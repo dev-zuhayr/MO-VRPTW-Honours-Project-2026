@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+outputs/
+!outputs/.gitkeep
+runs/            # HPC sweep outputs: generated configs, checkpoints, workbooks
+logs/            # Slurm stdout/stderr
+.DS_Store
+.venv/
+venv/

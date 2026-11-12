@@ -1,0 +1,106 @@
+# MOACO parameter tuning spec — UCT HPC, FULL 100-customer instances.
+#
+#   2 x 3 x 3 x 3 = 54 parameter sets (shards)
+#   56 instances x 5 seeds = 280 solver runs per shard
+#   15,120 solver runs total
+#
+# Prerequisite (once, from the repo root):
+#     python scripts/download_instances.py --all
+#
+# WALL TIME — READ BEFORE SUBMITTING. MOACO is by far the more expensive of the
+# two algorithms, and it scales badly with instance size:
+# construct_ant_solution() calls candidate_customers() at every insertion step,
+# and that evaluates a full candidate route for every remaining customer. Going
+# from 25 to 100 customers is roughly a 20-60x cost increase PER RUN, on top of
+# ~9x more runs per shard. Always pilot first:
+#     ./hpc/submit.sh hpc/specs/moaco.yaml --pilot
+# If one shard will not fit in the partition's time limit, cut the grid or the
+# instance list rather than hoping — see hpc/README.md.
+#
+# The grid brackets the values in reduced25_hard.yaml (n_ants 25, alpha 1.0,
+# beta 3.0, rho 0.1). alpha/beta is the ratio that matters most: alpha too high
+# relative to beta and the colony trusts stale pheromone over real geometry,
+# which shows up as a front that collapses over iterations.
+
+algorithm: moaco
+tw_mode: hard
+
+n_runs: 5
+base_seed: 12345
+distance_rounding: null
+# No max_customers: these are the full 100-customer Solomon instances.
+
+fixed:
+  iterations: 150
+  archive_size: 50
+  tau0: 1.0
+
+grid:
+  n_ants: [15, 25]
+  alpha: [0.5, 1.0, 2.0]     # pheromone influence
+  beta: [2.0, 3.0, 5.0]      # heuristic (1/distance) influence
+  rho: [0.05, 0.1, 0.3]      # evaporation
+
+instances:
+  # --- C1 (9) ---
+  - data/instances/C101.txt
+  - data/instances/C102.txt
+  - data/instances/C103.txt
+  - data/instances/C104.txt
+  - data/instances/C105.txt
+  - data/instances/C106.txt
+  - data/instances/C107.txt
+  - data/instances/C108.txt
+  - data/instances/C109.txt
+  # --- C2 (8) ---
+  - data/instances/C201.txt
+  - data/instances/C202.txt
+  - data/instances/C203.txt
+  - data/instances/C204.txt
+  - data/instances/C205.txt
+  - data/instances/C206.txt
+  - data/instances/C207.txt
+  - data/instances/C208.txt
+  # --- R1 (12) ---
+  - data/instances/R101.txt
+  - data/instances/R102.txt
+  - data/instances/R103.txt
+  - data/instances/R104.txt
+  - data/instances/R105.txt
+  - data/instances/R106.txt
+  - data/instances/R107.txt
+  - data/instances/R108.txt
+  - data/instances/R109.txt
+  - data/instances/R110.txt
+  - data/instances/R111.txt
+  - data/instances/R112.txt
+  # --- R2 (11) ---
+  - data/instances/R201.txt
+  - data/instances/R202.txt
+  - data/instances/R203.txt
+  - data/instances/R204.txt
+  - data/instances/R205.txt
+  - data/instances/R206.txt
+  - data/instances/R207.txt
+  - data/instances/R208.txt
+  - data/instances/R209.txt
+  - data/instances/R210.txt
+  - data/instances/R211.txt
+  # --- RC1 (8) ---
+  - data/instances/RC101.txt
+  - data/instances/RC102.txt
+  - data/instances/RC103.txt
+  - data/instances/RC104.txt
+  - data/instances/RC105.txt
+  - data/instances/RC106.txt
+  - data/instances/RC107.txt
+  - data/instances/RC108.txt
+  # --- RC2 (8) ---
+  - data/instances/RC201.txt
+  - data/instances/RC202.txt
+  - data/instances/RC203.txt
+  - data/instances/RC204.txt
+  - data/instances/RC205.txt
+  - data/instances/RC206.txt
+  - data/instances/RC207.txt
+  - data/instances/RC208.txt

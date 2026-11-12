@@ -1,0 +1,106 @@
+# SOFT time windows: violations are PERMITTED and become objective f3.
+# 3-objective — the full formulation from the proposal abstract.
+# The hard-feasible solution set is exactly the f3 = 0 face of this front.
+output: outputs/results_soft.xlsx
+checkpoint_dir: outputs/checkpoints_soft
+n_runs: 2 #10
+base_seed: 12345
+n_jobs: 4 #40
+max_customers: 25
+
+objectives: [total_distance, num_vehicles, total_tardiness]
+
+instances:
+  - data/instances/C101.txt
+  # - data/instances/C102.txt
+  # - data/instances/C103.txt
+  # - data/instances/C104.txt
+  # - data/instances/C105.txt
+  # - data/instances/C106.txt
+  # - data/instances/C107.txt
+  # - data/instances/C108.txt
+  # - data/instances/C109.txt
+  # - data/instances/C201.txt
+  - data/instances/C202.txt
+  # - data/instances/C203.txt
+  # - data/instances/C204.txt
+  # - data/instances/C205.txt
+  # - data/instances/C206.txt
+  # - data/instances/C207.txt
+  # - data/instances/C208.txt
+  - data/instances/R101.txt
+  # - data/instances/R102.txt
+  # - data/instances/R103.txt
+  # - data/instances/R104.txt
+  # - data/instances/R105.txt
+  # - data/instances/R106.txt
+  # - data/instances/R107.txt
+  # - data/instances/R108.txt
+  # - data/instances/R109.txt
+  # - data/instances/R110.txt
+  # - data/instances/R111.txt
+  # - data/instances/R112.txt
+  # - data/instances/R201.txt
+  # - data/instances/R202.txt
+  # - data/instances/R203.txt
+  # - data/instances/R204.txt
+  # - data/instances/R205.txt
+  # - data/instances/R206.txt
+  # - data/instances/R207.txt
+  # - data/instances/R208.txt
+  # - data/instances/R209.txt
+  # - data/instances/R210.txt
+  # - data/instances/R211.txt
+  - data/instances/RC101.txt
+  # - data/instances/RC102.txt
+  # - data/instances/RC103.txt
+  # - data/instances/RC104.txt
+  # - data/instances/RC105.txt
+  # - data/instances/RC106.txt
+  # - data/instances/RC107.txt
+  # - data/instances/RC108.txt
+  # - data/instances/RC201.txt
+  # - data/instances/RC202.txt
+  # - data/instances/RC203.txt
+  # - data/instances/RC204.txt
+  # - data/instances/RC205.txt
+  # - data/instances/RC206.txt
+  # - data/instances/RC207.txt
+  # - data/instances/RC208.txt
+
+algorithms:
+  # - name: spea2
+  #   fixed: { tw_mode: soft }
+  #   grid:
+  #     pop_size: [60]
+  #     archive_size: [40]
+  #     generations: [150]
+
+  # - name: moaco
+  #   fixed: { tw_mode: soft }
+  #   grid:
+  #     n_ants: [30]
+  #     iterations: [100]
+  #     alpha: [1.0]
+  #     beta: [2.0, 5.0]
+  #     rho: [0.1]
+
+  # - name: nsga2
+  #   grid:
+  #     pop_size: [60]
+  #     generations: [150]
+
+  - name: alns
+    fixed:
+      tw_mode: soft
+      n_iterations: 2000
+      n_remove_frac: 0.25
+      start_temp: 100.0
+      cooling: 0.999
+
+  - name: mopso
+    fixed:
+      tw_mode: soft
+      n_particles: 50
+      n_iterations: 300
+      max_archive: 50

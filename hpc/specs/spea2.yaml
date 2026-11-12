@@ -1,0 +1,98 @@
+# SPEA2 parameter tuning spec — UCT HPC, FULL 100-customer instances.
+#
+#   3 x 2 x 2 x 3 = 36 parameter sets (shards)
+#   56 instances x 5 seeds = 280 solver runs per shard
+#   10,080 solver runs total
+#
+# Prerequisite (once, from the repo root):
+#     python scripts/download_instances.py --all
+# make_configs.py refuses to generate if any instance file is missing.
+#
+# The grid brackets the values in reduced25_hard.yaml (pop_size 80,
+# archive_size 60). generations is held at 200 so pop_size is the only budget
+# knob — otherwise a "better" setting is just a bigger budget.
+#
+# Objectives follow tw_mode automatically:
+#     ./hpc/submit.sh hpc/specs/spea2.yaml --tw-mode soft
+
+algorithm: spea2
+tw_mode: hard
+
+n_runs: 5              # seeds per parameter set: 12345 .. 12349
+base_seed: 12345
+distance_rounding: null
+# No max_customers: these are the full 100-customer Solomon instances.
+
+fixed:
+  generations: 200
+
+grid:
+  pop_size: [40, 80, 120]
+  archive_size: [40, 60]
+  crossover_rate: [0.7, 0.9]
+  mutation_rate: [0.1, 0.3, 0.5]
+  # k: [null]          # null -> sqrt(pop_size + archive_size), the SPEA2 default
+
+instances:
+  # --- C1 (9) ---
+  - data/instances/C101.txt
+  - data/instances/C102.txt
+  - data/instances/C103.txt
+  - data/instances/C104.txt
+  - data/instances/C105.txt
+  - data/instances/C106.txt
+  - data/instances/C107.txt
+  - data/instances/C108.txt
+  - data/instances/C109.txt
+  # --- C2 (8) ---
+  - data/instances/C201.txt
+  - data/instances/C202.txt
+  - data/instances/C203.txt
+  - data/instances/C204.txt
+  - data/instances/C205.txt
+  - data/instances/C206.txt
+  - data/instances/C207.txt
+  - data/instances/C208.txt
+  # --- R1 (12) ---
+  - data/instances/R101.txt
+  - data/instances/R102.txt
+  - data/instances/R103.txt
+  - data/instances/R104.txt
+  - data/instances/R105.txt
+  - data/instances/R106.txt
+  - data/instances/R107.txt
+  - data/instances/R108.txt
+  - data/instances/R109.txt
+  - data/instances/R110.txt
+  - data/instances/R111.txt
+  - data/instances/R112.txt
+  # --- R2 (11) ---
+  - data/instances/R201.txt
+  - data/instances/R202.txt
+  - data/instances/R203.txt
+  - data/instances/R204.txt
+  - data/instances/R205.txt
+  - data/instances/R206.txt
+  - data/instances/R207.txt
+  - data/instances/R208.txt
+  - data/instances/R209.txt
+  - data/instances/R210.txt
+  - data/instances/R211.txt
+  # --- RC1 (8) ---
+  - data/instances/RC101.txt
+  - data/instances/RC102.txt
+  - data/instances/RC103.txt
+  - data/instances/RC104.txt
+  - data/instances/RC105.txt
+  - data/instances/RC106.txt
+  - data/instances/RC107.txt
+  - data/instances/RC108.txt
+  # --- RC2 (8) ---
+  - data/instances/RC201.txt
+  - data/instances/RC202.txt
+  - data/instances/RC203.txt
+  - data/instances/RC204.txt
+  - data/instances/RC205.txt
+  - data/instances/RC206.txt
+  - data/instances/RC207.txt
+  - data/instances/RC208.txt

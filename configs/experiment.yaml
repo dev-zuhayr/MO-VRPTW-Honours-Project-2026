@@ -1,0 +1,28 @@
+# ---------------------------------------------------------------------------
+# MOVRPTW experiment configuration
+# ---------------------------------------------------------------------------
+# Run with:  python scripts/run_experiment.py --config configs/experiment.yaml
+# ---------------------------------------------------------------------------
+
+output: outputs/results.xlsx        # workbook to write
+append: false                        # true -> merge into an existing workbook
+checkpoint_dir: outputs/checkpoints  # per-task .pkl checkpoints (enables resume)
+
+n_runs: 1                            # independent replications per configuration
+base_seed: 12345                     # seed of run 0; run r uses base_seed + r
+n_jobs: 4                            # parallel workers (-1 = all cores, 1 = serial)
+timeout_s: null                      # optional per-task wall-clock budget
+
+objectives: [num_vehicles, total_distance]
+
+distance_rounding: null      
+
+instances:
+  - data/instances/C101.txt
+
+algorithms:
+  - name: grasp
+    fixed:
+      tw_mode: hard
+      iterations: 400
+      alpha: 0.1

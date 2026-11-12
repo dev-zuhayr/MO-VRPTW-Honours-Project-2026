@@ -1,0 +1,18 @@
+# A deliberately tiny configuration for a fast end-to-end smoke test
+# (~30 seconds). Use this to verify your setup before launching a full run.
+output: outputs/smoke.xlsx
+append: false
+checkpoint_dir: outputs/checkpoints_smoke
+n_runs: 2
+base_seed: 7
+n_jobs: 2
+objectives: [num_vehicles, total_distance]
+
+instances:
+  - data/instances/C101.txt
+
+algorithms:
+  - name: nsga2
+    grid:
+      pop_size: [20]
+      generations: [30]
